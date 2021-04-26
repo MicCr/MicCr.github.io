@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    pre {
+      background: #eee;
+      padding-top: 10px;
+      border-radius: 15px;
+    }
+    strong {
+      background: #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h3>async和await（快速进入command + p -> async）</h3>
+    <p>❗️ async是什么</p>
+    <p style="color:red">
+      「async」作为一个关键字放到函数前面，用于表示函数是一个「异步函数」。<br/>
+      因为async就是「异步」的意思， 异步函数也就意味着该函数的执行<strong>不会阻塞后面代码的执行</strong><br/>
+      async函数<strong>返回的是一个promise 对象</strong>，如果要获取到promise 返回值，应该用then 方法
+    </p>
+    <p>❗️ await是什么</p>
+    <p style="color:purple">
+      「await」是「等待」的意思，那么它等待什么呢，它后面跟着什么呢？<br/>
+      其实它后面可以放任何表达式，不过我们更多的是放一个<strong>返回promise对象的表达式</strong>。<br/>
+      注意 await 关键字只能放到 async 函数里面
+    </p>
+    <p style="color:blue">
+      如果async函数中有返回一个值<br/>
+      当调用该函数时，内部会调用Promise.resolve()方法把它转化成一个promise对象作为返回<br/>
+      如果async函数内部抛出错误<br/>
+      那么就会调用Promise.reject()返回一个promise 对象<br/>
+    </p>
+    <pre>
+    // 理解例
+    async function timeout(flag) {
+      if (flag) {
+        return 'hello world'
+      } else {
+        throw 'my god, failure'
+      }
+    }
+    console.log(timeout(true))  // 调用Promise.resolve() 返回promise 对象。
+    console.log(timeout(false)); // 调用Promise.reject() 返回promise 对象。
+    </pre>
+    <button onclick="run()">试一试</button>
+    <p>使用例：创建一个返回promise对象的函数 表示一个异步操作</p>
+    <pre>
+      function newTask(num) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(num * 2)
+          }, 3000)
+        })
+      }
+    </pre>
+    <p>
+      再写一个async函数
+      <br/>
+      使用await关键字await后面放置的就是返回promise对象的一个表达式
+    </p>
+    <pre>
+      async function getDelayData() {
+        let res = await newTask(30)
+        console.log(res)
+      }
+    </pre>
+    <p>调用getDelayData()方法 观察2s后控制台输出60</p>
+    <button onclick="getDelayData()">调用</button>
+  </div>
+  <script>
+    // 理解例
+    async function timeout(flag) {
+      if (flag) {
+        return 'hello world'
+      } else {
+        throw 'my god, failure'
+      }
+    }
+    function run() {
+      console.log(timeout(true))
+      console.log(timeout(false))
+    }
+
+    // 使用例
+    function newTask(num) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(num * 2)
+        }, 2000)
+      })
+    }
+
+    async function getDelayData() {
+      let res = await newTask(30)
+      console.log(res)
+    }
+
+    // getDelayData()
+  </script>
+</body>
+</html>

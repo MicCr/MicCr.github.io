@@ -1,0 +1,86 @@
+<!--
+ * @Description: 
+ * @version: v1.0
+ * @Author: ZhangCb
+ * @Date: 2021-01-26 16:14:24
+ * @LastEditors: ZhangCb
+ * @LastEditTime: 2021-02-03 11:14:29
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="./index.css">
+  <title>Document</title>
+</head>
+<body>
+  <h1>new操作符实现</h1>
+  <pre>
+    var mult = (function() {
+      var cache = {}
+      var calculate = function(arr) {
+        console.log(arr)
+        var a = 1
+        for (let i = 0; i < arr.length; i++) {
+          a *= arr[i]
+        }
+        return a
+      }
+    
+      return function() {
+        var arr = [].shift.call(arguments)
+    
+        if (cache[arr]) {
+          return cache[arr]
+        }
+    
+        return cache[arr] = calculate.apply(null, [arr])
+        return cache[arr] = calculate.call(null, arr)
+      }
+    })()
+    
+    mult([1, 2, 3])
+    mult([4, 5, 6])
+    mult([7, 8, 9])
+    
+    var mult = (function(){
+    var cache = {};
+    console.log(arguments)
+    return function(){
+      var args = Array.prototype.join.call( arguments, ',' ); if ( args in cache ){
+    return cache[ args ]; }
+    var a = 1;
+    for ( var i = 0, l = arguments.length; i < l; i++ ){
+    a = a * arguments[i]; }
+    return cache[ args ] = a; }
+    })()
+    
+    mult(1, 2, 3)
+  </pre>
+  <script>
+    function person() {
+      this.name = 'zcb'
+      this.age = '23'
+    }
+
+    var a = new person()
+
+    console.log(a.name)
+    console.log(a.age)
+
+    function myNew() {
+      let obj = {},
+          Constructor = [].shift.call(arguments)
+      obj.__proto__ = Constructor.prototype
+      var ret = Constructor.apply(obj, arguments)
+      return typeof ret === 'object' ? ret : obj
+    }
+
+    var b = myNew(person)
+
+    console.log(b.name)
+    console.log(b.age)
+  </script>
+</body>
+</html>

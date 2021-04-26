@@ -1,0 +1,169 @@
+<!--
+ * @Description: 
+ * @version: v1.0
+ * @Author: ZhangCb
+ * @Date: 2020-08-26 10:37:05
+ * @LastEditors: ZhangCb
+ * @LastEditTime: 2021-02-22 18:58:45
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* float + margin */
+    .container1 {
+      width: 100%;
+      height: 300px;
+    } 
+    .left1 {
+      height: 100%;
+      background: pink;
+      width: 300px;
+      float: left;
+    } 
+    .right1 {
+      height: 100%;
+      background: paleturquoise;
+      margin-left: 300px;
+    }
+    /* float + BFC */
+    .container2 {
+      width: 100%;
+      height: 300px;
+    } 
+    .left2 {
+      height: 100%;
+      background: pink;
+      width: 300px;
+      float: left;
+    } 
+    .right2 {
+      height: 100%;
+      background: paleturquoise;
+      overflow: hidden;
+    }
+    /* 父相子绝 */
+    .container3 {
+      width: 100%;
+      height: 300px;
+      position: relative;
+    } 
+    .left3 {
+      height: 100%;
+      background: pink;
+      width: 300px;
+      position: absolute;
+      left: 0;
+    } 
+    .right3 {
+      height: 100%;
+      background: paleturquoise;
+      position: absolute;
+      left: 300px;
+      right: 0;
+    }
+    /* flex布局 */
+    .container4 {
+      width: 100%;
+      height: 300px;
+      display: flex;
+    } 
+    .left4 {
+      height: 100%;
+      background: pink;
+      width: 300px;
+    } 
+    .right4 {
+      height: 100%;
+      background: paleturquoise;
+      flex: 1;
+    }
+    /* table布局 */
+    .container5 {
+      width: 100%;
+      height: 300px;
+      display: table;
+    } 
+    .left5 {
+      height: 100%;
+      background: pink;
+      width: 300px;
+      display: table-cell;
+    } 
+    .right5 {
+      height: 100%;
+      background: paleturquoise;
+      display: table-cell;
+    }
+    /* 浮动+负外边距 */
+    .container6 {
+      width: 100%;
+      height: 300px;
+    } 
+    .left6 {
+      height: 100%;
+      background: pink;
+      width: 300px;
+      float: left;
+      margin-right: -100%;
+    } 
+    .right6 {
+      height: 100%;
+      background: paleturquoise;
+      width: 100%;
+      float: left;
+    }
+    .content6 {
+      height: 100%;
+      background: darkkhaki;
+      margin-left: 300px;
+    }
+  </style>
+</head>
+<body>
+  command + p -> 3、二列布局（左定）
+
+  <div style="height:50px"></div>
+
+  1、float + margin
+  <div class="container1">
+    <div class="left1"></div>
+    <div class="right1"></div>
+  </div>
+
+  <div style="height:50px"></div>
+  
+  2、float + BFC
+  <div class="container2">
+    <div class="left2"></div>
+    <div class="right2"></div>
+  </div>
+
+  <div style="height:50px"></div>
+  
+  3、父相子绝
+  <div class="container3">
+    <div class="left3"></div>
+    <div class="right3"></div>
+  </div>
+
+  <div style="height:50px"></div>
+  
+  4、flex布局
+  <div class="container4">
+    <div class="left4"></div>
+    <div class="right4"></div>
+  </div>
+
+  <div style="height:50px"></div>
+  
+  5、table布局
+  <div class="container5">
+    <div class="left5"></div>
+    <div class="right5"></div>
+  </div>
+</body>
+</html>

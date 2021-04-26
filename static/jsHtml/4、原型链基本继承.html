@@ -1,0 +1,82 @@
+<!--
+ * @Description: 
+ * @version: v1.0
+ * @Author: ZhangCb
+ * @Date: 2021-01-26 16:14:24
+ * @LastEditors: ZhangCb
+ * @LastEditTime: 2021-01-26 17:03:01
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="./index.css">
+  <title>Document</title>
+</head>
+<body>
+  <h1>原型链基本继承</h1>
+  <p>超类</p>
+  <pre>
+    function SuperType() {
+      this.property = true
+    }
+
+    SuperType.property.getSuperValue = function() {
+      return this.property
+    }
+  </pre>
+  <p>子类</p>
+  <pre>
+    function SubType() {
+      this.property = false
+    }
+
+    SubType.prototype.getSubValue = function() {
+      return this.subProperty
+    }
+  </pre>
+  <p>继承</p>
+  <pre class="important">
+    继承 SuperType 实现的本质是重写原型
+    函数 SubType 创建时产生 prototype属性
+    SuperType.prototype 即为函数 SubType 的原型对象
+    SubType.prototype = new SuperType() 相当于
+    SubType 的原型对象 等于 SuperType的实例
+  </pre>
+  <pre>
+    SubType.prototype = new SuperType()
+
+    var instance = new SubType()
+    console.log(instance.getSuperValue())
+  </pre>
+  <script>
+    function SuperType() {
+      this.property = true
+    }
+
+    SuperType.prototype.getSuperValue = function() {
+      return this.property
+    }
+
+    function SubType() {
+      this.subProperty = false
+    }
+    
+    SubType.prototype.getSubValue = function() {
+      return this.subProperty
+    }
+    /**
+     * 继承 SuperType 实现的本质是重写原型
+     * 函数 SubType 创建时产生 prototype属性
+     * SuperType.prototype 即为函数 SubType 的原型对象
+     * SubType.prototype = new SuperType() 相当于
+     * SubType 的原型对象 等于 SuperType的实例
+    */
+    SubType.prototype = new SuperType()
+
+    var instance = new SubType()
+    console.log(instance.getSuperValue())
+  </script>
+</body>
+</html>

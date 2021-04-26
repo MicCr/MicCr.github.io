@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <h3>map与forEach的区别（快速进入command + p -> map_syntax）</h3>
+    <h4>区别1：forEach无返回值 map有返回值</h4>
+    <p>创建对象数组arr1</p>
+    <pre>
+    let arr1 = Array(7).fill({ name: '测试' })
+    </pre>
+    <button onclick="consoleVariable(arr1)">打印arr1</button>
+    <p>forEach</p>
+    <pre>
+    let console1 = arr1.forEach(item => {
+      return item
+    })
+    </pre>
+    <button onclick="consoleVariable(console1)">打印forEach</button>
+    <p>map</p>
+    <pre>
+    let console2 = arr1.map(item => {
+      return item
+    })
+    </pre>
+    <button onclick="consoleVariable(console2)">打印map</button>
+    <p style="color:red">forEach返回值为undefined map则有值</p>
+
+    <h4>区别2：forEach改变原数组 map返回新数组</h4>
+    <p>深拷贝数组arr2、arr3</p>
+    <pre>
+    let arr2 = JSON.parse(JSON.stringify(arr1))
+    let arr3 = JSON.parse(JSON.stringify(arr1))
+    </pre>
+    <button onclick="consoleVariable(arr2)">打印arr2</button>
+    <button onclick="consoleVariable(arr3)">打印arr3</button>
+    <p>map</p>
+    <pre>
+    let console3 = arr2.map((item, index) => {
+      return item.name + index
+    })
+    </pre>
+    <button onclick="consoleVariable(console3)">执行map 打印console3</button>
+    <button onclick="consoleVariable(arr3)">打印arr2</button>
+    <p style="color:red">执行map后原数组arr2并未发生变化</p>
+    <p>forEach</p>
+    <pre>
+    arr3.forEach((item, index) => {
+      item.name = item.name + index
+    })
+    </pre>
+    <button onclick="consoleVariable(arr3)">执行前 arr3</button>
+    <button onclick="handleForEach(arr3)">执行forEach</button>
+    <button onclick="consoleVariable(arr3)">执行后 arr3</button>
+    <p style="color:red">执行forEach后原数组arr3发生改变</p>
+    <h4 style="color:blueviolet">forEach改变坑</h4>
+    <p>深拷贝数组arr4 定义非对象数组arr5</p>
+    <pre>
+    let arr4 = JSON.parse(JSON.stringify(arr1))
+    let arr5 = ['测试', '迭代']
+    </pre>
+    <button onclick="consoleVariable(arr4)">打印arr4</button>
+    <button onclick="consoleVariable(arr5)">打印arr5</button>
+    <p>数组项为对象</p>
+    <pre>
+    arr4.forEach((item, index) => {
+      item.name += index
+    })
+    </pre>
+    <button onclick="handleForEach(arr4)">执行forEach</button>
+    <button onclick="consoleVariable(arr4)">执行后 arr4</button>
+    <p style="color:red">当数组项为对象时 使用forEach修改数组项对象属性成功</p>
+    <p>数组项为非对象</p>
+    <pre>
+    arr5.forEach((item, index) => {
+      item += index
+    })
+    </pre>
+    <button onclick="handleForEach2(arr5)">执行forEach（此处有打印）</button>
+    <button onclick="consoleVariable(arr5)">执行后 arr5</button>
+    <p style="color:red">当数组项不是对象时 执行forEach虽在过程中获得了改变后的值 但最终实际未改变</p>
+    <p>数组项为对象 直接改变对象</p>
+    <pre>
+    arr4.forEach((item, index) => {
+      item += index
+    })
+    </pre>
+    <button onclick="handleForEach2(arr4)">执行forEach（此处有打印）</button>
+    <button onclick="consoleVariable(arr4)">执行后 arr4</button>
+    <p style="color:red">当数组项为对象时 执行forEach也无法改变对象本身</p>
+
+    <h4>如何对数组本身动刀？使用map改变</h4>
+    <p>深拷贝数组arr6</p>
+    <pre>
+    let arr6 = JSON.parse(JSON.stringify(arr1))
+    </pre>
+    <button onclick="consoleVariable(arr6)">打印arr6</button>
+    <pre>
+    let console4 = arr6.map((item, index) => {
+      return item = index
+    })
+    </pre>
+    <button onclick="consoleVariable(console4)">执行后arr6</button>
+  </div>
+  <script>
+    /* 区别1 */
+    let arr1 = Array(7).fill({ name: '测试' })
+
+    let console1 = arr1.forEach(item => {
+      return item
+    })
+    let console2 = arr1.map(item => {
+      return item
+    })
+
+    /* 区别2 */
+    let arr2 = JSON.parse(JSON.stringify(arr1))
+    let arr3 = JSON.parse(JSON.stringify(arr1))
+
+    let console3 = arr2.map((item, index) => {
+      return item.name + index
+    })
+    function handleForEach(arr) {
+      arr.forEach((item, index) => {
+        item.name += index
+      })
+      alert('执行成功')
+    }
+
+    /* forEach改变坑 */
+    let arr4 = JSON.parse(JSON.stringify(arr1))
+    let arr5 = ['测试', '迭代']
+
+    function handleForEach2(arr) {
+      arr.forEach((item, index) => {
+        item += index
+        console.log('item值为:', item)
+      })
+      alert("执行成功")
+    }
+
+    /* map改变 */
+    let arr6 = JSON.parse(JSON.stringify(arr1))
+    let console4 = arr6.map((item, index) => {
+      return item = index
+    })
+
+    /* 笔记正确性验证 */
+    // let test1 = [1, 2, 3]
+    // test1.forEach((item, index) => {
+    //   test1[index] = { name: `测试${item}` }
+    // })
+    // console.log(test1)
+    // let newArr = test1.map(item => {
+    //   return item = { name: `测试${item}` }
+    // })
+    // console.log(newArr)
+
+    // 打印变量
+    function consoleVariable(variable) {
+      console.log(variable)
+    }
+  </script>
+</body>
+</html>

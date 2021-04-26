@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    pre {
+      background: #eee;
+      padding-top: 10px;
+      border-radius: 15px;
+    }
+    strong {
+      background: #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h3>基本promise（快速进入command + p -> promise）</h3>
+  <p style="color:red">
+    Promise接受一个「函数」作为参数<br>
+    该函数的两个参数分别是resolve函数和reject函数<br>
+    这两个函数就是就是「回调函数」，由JavaScript引擎提供
+  </p>
+  <pre>
+    const promise = new Promise(function(resolve, reject) {
+      if (/* 异步操作成功 */) {
+        resolve(data);
+      } else {
+        /* 异步操作失败 */
+        reject(error);
+      }
+    })
+  </pre>
+  <p style="color:blue">
+    resolve函数的作用：在异步操作成功时调用，并将异步操作的「结果」，作为参数传递出去；<br>
+    reject函数的作用：在异步操作失败时调用，并将异步操作报出的「错误」，作为参数传递出去。
+  </p>
+  <p style="color:red">
+    Promise实例生成以后，可以用「then方法」指定resolve状态和reject状态的回调函数<br>
+    <strong>then方法会返回一个Promise</strong><br>
+    它有两个参数，分别为Promise从pending变为fulfilled和rejected时的回调函数（第二个参数非必选）<br>
+    这两个函数都接受Promise对象传出的值作为参数
+  </p>
+  <p>
+    Promise对象三种状态：<br>
+    pending：初始值，不是fulfilled，也不是rejected<br>
+    fulfilled：代表操作成功<br>
+    rejected：代表操作失败
+  </p>
+  <p>理解例</p>
+  <pre>
+    // 理解
+    promise.then(函数1, 函数2)
+    promise.then(function(data) {
+      // do something when success
+    }, function(error) {
+      // do something when failure
+    })
+
+    // 常用
+    promise.then((res) => {
+      // do something when success
+    })
+    .catch((err) => {
+      // do something when failure
+    })
+  </pre>
+  <p style="color:red">注意：由于resolve指定的是异步操作成功后的回调函数，它需要等所有同步代码执行后才会执行</p>
+</body>
+</html>

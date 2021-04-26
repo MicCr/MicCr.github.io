@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    pre {
+      background: #eee;
+      padding-top: 10px;
+      border-radius: 15px;
+    }
+    strong {
+      background: #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h3>初始化taro项目（快速进入command + p -> vantWeapp）</h3>
+    <p>1、在src下新建文件夹components</p>
+    <p>2、components新建文件夹vant-weapp</p>
+    <p>
+      3、打开vant-weapp GitHub 拉取组件代码<br>
+      https://github.com/youzan/vant-weapp
+    </p>
+    <p>4、将组件库dist文件夹下内容复制到vant-weapp文件夹中</p>
+    <p>
+      5、在页面对应config.js中配置usingComponents<br>
+      例：index页面
+    </p>
+    <pre>
+      export default {
+        navigationBarTitleText: '首页',
+        usingComponents: {
+          "van-button": "../../components/vant-weapp/button/index",
+          "van-icon": "../../components/vant-weapp/icon/index",
+          "van-image": "../../components/vant-weapp/image/index",
+          "van-circle": "../../components/vant-weapp/circle/index",
+          "van-calendar": "../../components/vant-weapp/calendar/index",
+          ...
+        }
+      }
+    </pre>
+    <p>
+      6、在config/index.js引入Vant-weapp依赖工具库<br>
+      找到copy属性，添加patterns
+    </p>
+    <pre>
+      copy: {
+        patterns: [
+          {
+            from: 'src/components/vant-weapp/wxs/',
+            to: 'dist/components/vant-weapp/wxs/'
+          }
+        ],
+        options: {}
+      }
+    </pre>
+    <p>
+      7、调整vant组件大小<br>
+      config/index.js下修改mini.pxtransform属性
+    </p>
+    <pre>
+      pxtransform: {
+        enable: true,
+        config: {
+          selectorBlackList: [
+            /^.van-.*?$/, 
+          ]
+        },
+      },
+    </pre>
+    <p>
+      8、若组件含有wxs文件 需要在patterns中手动拷贝配置<br>
+      例：日历选择
+    </p>
+    <pre>
+      patterns: [
+        {
+          from: 'src/components/vant-weapp/wxs/',
+          to: 'dist/components/vant-weapp/wxs/'
+        },
+        // 日历
+        {
+          from: 'src/components/vant-weapp/calendar',
+          to: 'dist/components/vant-weapp/calendar'
+        },
+      ],
+    </pre>
+  </div>
+</body>
+</html>
